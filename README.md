@@ -1,16 +1,16 @@
-# SignFlow — Real-Time ASL Gesture Recognition
+# SignFlow — Pengenalan Bahasa Isyarat ASL Real-Time
 
-SignFlow is a real-time American Sign Language (ASL) gesture recognition system powered by Computer Vision and Deep Learning. It translates dynamic hand and upper-body gestures into text using standard webcam video streams.
+**SignFlow** adalah sistem penerjemah bahasa isyarat **American Sign Language (ASL)** secara real-time berbasis **Computer Vision** dan **Deep Learning**. Sistem ini mengubah gestur tangan dan tubuh bagian atas dari kamera webcam menjadi teks secara instan.
 
-## System Architecture
-- **Landmark Extraction:** MediaPipe Holistic tracking 48 spatial keypoints (12 upper-body/pose, 42 left hand, 42 right hand) + 2 hand-presence masks, generating a 98-dimensional body-centered vector per frame.
-- **Sequence Modeling:** 2-layer Bidirectional GRU (`SignBiGRU`, 256 hidden units per direction) with Temporal Average Pooling over a 32-frame sliding temporal window.
-- **Evaluation Benchmark (Test Set / Unseen Signers):**
-  - **Top-1 Accuracy:** 75.7%
-  - **Top-3 Accuracy:** 89.1%
-  - **Target Vocabulary:** 65 ASL words + 1 synthetic `idle` state.
+## Arsitektur Sistem
+- **Ekstraksi Landmark:** MediaPipe Holistic melacak 48 titik kunci spasial (12 pose tubuh bagian atas, 42 tangan kiri, 42 tangan kanan) + 2 mask deteksi tangan, menghasilkan vektor 98 dimensi per frame yang dinormalisasi terhadap pusat dan lebar bahu.
+- **Pemodelan Sekuens:** 2-layer Bidirectional GRU (`SignBiGRU`, 256 unit per arah) dengan *Temporal Average Pooling* pada *sliding window* 32 frame.
+- **Hasil Evaluasi Benchmark (Test Set / Unseen Signers):**
+  - **Akurasi Top-1:** 75,7%
+  - **Akurasi Top-3:** 89,1%
+  - **Kosakata Target:** 65 kata ASL + 1 kelas `idle`.
 
-## Project Structure
+## Struktur Proyek
 ```text
 SignFlow-AI/
 ├── models/
@@ -26,16 +26,19 @@ SignFlow-AI/
 └── README.md
 ```
 
-## Setup & Usage
-1. Install dependencies:
+## Instalasi & Cara Menjalankan
+1. Install dependensi yang dibutuhkan:
    ```bash
    pip install -r requirements.txt
    ```
-2. Ensure `model.pt` and `label_map.json` are inside `models/`.
-3. Run real-time webcam inference:
+2. Pastikan file `model.pt` dan `label_map.json` berada di dalam folder `models/`.
+3. Jalankan inferensi webcam secara real-time:
    ```bash
    python app_webcam.py
    ```
-   - Press `a` to toggle Aspect Ratio mode (`3:4` / `9:16` / `Raw`)
-   - Press `c` to clear the 32-frame buffer
-   - Press `q` to quit
+   *(Gunakan `python app_webcam.py --camera 1` jika memakai webcam eksternal.)*
+
+### Kontrol Keyboard
+- **`a`**: Ganti mode rasio aspek (`3:4` / `9:16` / `Raw`)
+- **`c`**: Reset / bersihkan buffer 32 frame
+- **`q`**: Keluar dari aplikasi
